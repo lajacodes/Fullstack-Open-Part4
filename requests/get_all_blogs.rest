@@ -1,27 +1,27 @@
-GET http://localhost:3009/api/blogs/613610c53fee339c3c38cde9
+GET http://localhost:3009/api/blog
 
 
 ###
-DELETE  http://localhost:3009/api/blogs/61361960cd77bc16cb2eb7a7
+DELETE  http://localhost:3009/api/blog/614c471bc8abc353a174054a
 
 ###
-POST http://localhost:3009/api/blogs 
+POST http://localhost:3009/api/blog 
 content-type: application/json
                                                                   
 {
-    "title":"poiuy",
-    "author":"0oiuytrtyi",
+    "title":"ogede",
+    "author":"lajaCodes",
     "url": "laja/002",
-    "likes": 9876567890
+    "likes": 987656782990
 }
 
 ###
-PUT http://localhost:3009/api/blogs/613611203fee339c3c38cdeb
+PUT http://localhost:3009/api/blog/613602c85a846c79d8dce875
 content-type: application/json
                                                           
 {
-    "title":"poiuy",
-    "author":"0oiuytrtyi",
-    "url": "laja/00",
-    "likes": 987656789 
+    "title":"academics",
+    "author":"lajaMoney",
+    "url": "laja/000",
+    "likes": 6
 }

@@ -3,13 +3,12 @@ const { response } = require("express");
 const Blog = require("../models/blog");
 const { error } = require("../utils/logger");
 
-notesRouter.get("/", (request, response) => {
-  Blog.find({}).then((blogs) => {
-    return response.send(blogs);
-  });
+notesRouter.get("/", async (request, response) => {
+  const allBlogs = await Blog.find({});
+  response.send(allBlogs);
 });
 
-notesRouter.post("/", (request, response, next) => {
+notesRouter.post("/", async (request, response, next) => {
   const postBlog = request.body;
 
   const blog = new Blog({
@@ -19,29 +18,25 @@ notesRouter.post("/", (request, response, next) => {
     likes: postBlog.likes,
   });
 
-  blog
-    .save()
-    .then((saveBlog) => {
-      return response.status(201).json(saveBlog);
-    })
-    .catch((error) => error(next));
+  const saveBlogs = await blog.save();
+  response.json(saveBlogs);
 });
 
 // notesRouter.get("/", (req, res) => {
 //   res.send("<h1>blog app display</h1>");
 // });
 
-notesRouter.delete("/:id", (request, response, next) => {
+notesRouter.delete("/:id", async (request, response, next) => {
   const deleteOne = request.params.id;
-  Blog.findByIdAndRemove(deleteOne)
-    .then((blogs) => {
-      if (blogs) response.status(204).end();
-      else response.status(409).send({ error: "id not found" });
-    })
-    .catch((error) => error(next));
+  const deleteId = await Blog.findByIdAndRemove(deleteOne);
+  if (deleteId) {
+    response.status(204).end();
+  } else {
+    response.status(409).send({ error: "id not found" });
+  }
 });
 
-notesRouter.put("/:id", (request, response, next) => {
+notesRouter.put("/:id", async (request, response, next) => {
   const updateBlog = request.body;
 
   const blog = {
@@ -51,23 +46,23 @@ notesRouter.put("/:id", (request, response, next) => {
     likes: updateBlog.likes,
   };
 
-  Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-    .then((updatedNote) => {
-      response.json(updatedNote);
-    })
-    .catch((error) => next(error));
+  const putIn = await Blog.findByIdAndUpdate(request.params.id, blog, {
+    new: true,
+  });
+  if (putIn) {
+    response.json(putIn);
+  } else {
+    response.status(400).end();
+  }
 });
 
-notesRouter.get("/:id", (request, response, next) => {
-  Blog.findById(request.params.id)
-    .then((blog) => {
-      if (blog) {
-        response.json(blog);
-      } else {
-        response.status(404).end();
-      }
-    })
-    .catch((error) => next(error));
+notesRouter.get("/:id", async (request, response, next) => {
+  const getId = await Blog.findById(request.params.id);
+  if (getId) {
+    response.json(getId);
+  } else {
+    response.status(404).end();
+  }
 });
 
 module.exports = notesRouter;

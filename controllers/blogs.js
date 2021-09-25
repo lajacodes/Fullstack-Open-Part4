@@ -8,8 +8,11 @@ notesRouter.get("/", async (request, response) => {
   response.send(allBlogs);
 });
 
-notesRouter.post("/", async (request, response, next) => {
+notesRouter.post("/", async (request, response) => {
   const postBlog = request.body;
+
+  if (!postBlog.url || !postBlog.title) return response.status(400).end();
+  if (!postBlog.likes) postBlog.likes === 0;
 
   const blog = new Blog({
     title: postBlog.title,
@@ -19,14 +22,10 @@ notesRouter.post("/", async (request, response, next) => {
   });
 
   const saveBlogs = await blog.save();
-  response.json(saveBlogs);
+  response.send(saveBlogs);
 });
 
-// notesRouter.get("/", (req, res) => {
-//   res.send("<h1>blog app display</h1>");
-// });
-
-notesRouter.delete("/:id", async (request, response, next) => {
+notesRouter.delete("/:id", async (request, response) => {
   const deleteOne = request.params.id;
   const deleteId = await Blog.findByIdAndRemove(deleteOne);
   if (deleteId) {
@@ -36,7 +35,7 @@ notesRouter.delete("/:id", async (request, response, next) => {
   }
 });
 
-notesRouter.put("/:id", async (request, response, next) => {
+notesRouter.put("/:id", async (request, response) => {
   const updateBlog = request.body;
 
   const blog = {
@@ -56,7 +55,7 @@ notesRouter.put("/:id", async (request, response, next) => {
   }
 });
 
-notesRouter.get("/:id", async (request, response, next) => {
+notesRouter.get("/:id", async (request, response) => {
   const getId = await Blog.findById(request.params.id);
   if (getId) {
     response.json(getId);

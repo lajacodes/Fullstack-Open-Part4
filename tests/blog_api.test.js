@@ -41,6 +41,54 @@ test("unique identify property of blog posts", async () => {
   expect(response.body[0].id).toBeDefined();
 }, 100000);
 
+test("a valid blog can be added ", async () => {
+  const newBlog = {
+    title: "money can buy hapiness",
+    author: "goodness",
+    url: "http/l@gmail.com",
+    likes: 3,
+  };
+
+  await api
+    .post("/api/blog")
+    .send(newBlog)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await helper.blogsInDb();
+  expect(blogsAtEnd).toHaveLength(helper.initialBLogs.length + 1);
+
+  const contents = blogsAtEnd.map((n) => n.title);
+  expect(contents).toContain("money can buy hapiness");
+}, 100000);
+
+test("if likes property is missing add it", async () => {
+  const newBlog = {
+    title: "money cant buy hapiness",
+    author: "goodnesss",
+    url: "http/l@gmails.com",
+  };
+
+  await api
+    .post("/api/blog")
+    .send(newBlog)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  const blogAtEnd = await helper.blogsInDb();
+  const lastBlog = blogAtEnd.find(
+    (item) => item.title === "money cant buy hapiness"
+  );
+  expect(lastBlog.likes).toBeDefined;
+}, 100000);
+
+test("url and title are missing", async () => {
+  const newBlog = {
+    author: "okay",
+  };
+  await api.post("/api/blog").send(newBlog).expect(400);
+}, 100000);
+
 afterAll(() => {
   mongoose.connection.close();
 });

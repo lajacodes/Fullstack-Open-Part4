@@ -12,16 +12,16 @@ content-type: application/json
     "title":"ogede",
     "author":"lajaCodes",
     "url": "laja/002",
-    "likes": 987656782990
+    "likes": 9
 }
 
 ###
-PUT http://localhost:3009/api/blog/613602c85a846c79d8dce875
+PUT http://localhost:3009/api/blog/614c4522ff1a6f61d66b19e6
 content-type: application/json
                                                           
 {
-    "title":"academics",
-    "author":"lajaMoney",
-    "url": "laja/000",
-    "likes": 6
+    "title":"is okay",
+    "author":"lajaOlowo",
+    "url": "laj/000",
+    "likes": 2
 }

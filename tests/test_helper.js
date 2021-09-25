@@ -9,16 +9,16 @@ const initialBLogs = [
     id: "613602c85a846c79d8dce875",
   },
   {
-    title: "books",
-    author: "lajas",
-    url: "laja/002",
-    likes: 98765678290,
+    title: "is okay",
+    author: "lajaOlowo",
+    url: "laj/000",
+    likes: 2,
     id: "614c4522ff1a6f61d66b19e6",
   },
 ];
 
 const nonExistingId = async () => {
-  const blog = new Blog({ title: "okay", likes: 2 });
+  const blog = new Blog({ title: "okay", author: orisa });
   await blog.save();
   await blog.remove();
 

@@ -7,13 +7,15 @@ DELETE  http://localhost:3009/api/blog/614c4557819f8561957fe175
 ###
 POST http://localhost:3009/api/blog 
 content-type: application/json
-                                                                  
+                                                             
 {
     "title":"oged",
-    "author":"lajaCode",
+    "author":"lajaCode",      
     "url": "laja/009",
-    "likes": 6
+    "likes": 6 
 }
+
+
 
 ###
 PUT http://localhost:3009/api/blog/615275af3638622d59873d42
@@ -23,5 +25,5 @@ content-type: application/json
     "title":"is okay",
     "author":"lajaOlowo",
     "url": "laj/000",
-    "likes":1
+    "likes": 4
 }

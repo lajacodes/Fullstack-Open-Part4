@@ -27,12 +27,8 @@ notesRouter.post("/", async (request, response) => {
 
 notesRouter.delete("/:id", async (request, response) => {
   const deleteOne = request.params.id;
-  const deleteId = await Blog.findByIdAndRemove(deleteOne);
-  if (deleteId) {
-    response.status(204).end();
-  } else {
-    response.status(409).send({ error: "id not found" });
-  }
+  await Blog.findByIdAndRemove(deleteOne);
+  response.status(204).end();
 });
 
 notesRouter.put("/:id", async (request, response) => {

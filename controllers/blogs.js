@@ -1,15 +1,21 @@
 const notesRouter = require("express").Router();
 const { response } = require("express");
 const Blog = require("../models/blog");
+const User = require("../models/user");
 const { error } = require("../utils/logger");
 
 notesRouter.get("/", async (request, response) => {
-  const allBlogs = await Blog.find({});
-  response.send(allBlogs);
+  const allBlogs = await Blog.find({}).populate("user", {
+    username: 1,
+    name: 1,
+  });
+  response.json(allBlogs);
 });
 
 notesRouter.post("/", async (request, response) => {
   const postBlog = request.body;
+
+  const user = await User.findById(postBlog.userId);
 
   if (!postBlog.url || !postBlog.title) return response.status(400).end();
   if (!postBlog.likes) postBlog.likes === 0;
@@ -19,10 +25,13 @@ notesRouter.post("/", async (request, response) => {
     author: postBlog.author,
     url: postBlog.url,
     likes: postBlog.likes,
+    user: user._id,
   });
 
-  const saveBlogs = await blog.save();
-  response.send(saveBlogs);
+  const saveBlog = await blog.save();
+  user.blogs = user.blogs.concat(saveBlog._id);
+  await user.save();
+  response.json(saveBlog);
 });
 
 notesRouter.delete("/:id", async (request, response) => {

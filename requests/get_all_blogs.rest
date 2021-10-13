@@ -2,23 +2,24 @@ GET http://localhost:3009/api/blog
 
 
 ###
-DELETE  http://localhost:3009/api/blog/614c4557819f8561957fe175
+DELETE  http://localhost:3009/api/blog/61662ffd5b2ad786fc163182
+
 
 ###
 POST http://localhost:3009/api/blog 
 content-type: application/json
                                                              
 {
-    "title":"oged",
-    "author":"lajaCode",      
-    "url": "laja/009",
-    "likes": 6 
+    "title":"just",
+    "author":"quartet",      
+    "url": "laj/01",
+    "likes": 2,
+    "userId":"6166ad4dbc21fd50045234b7" 
 }
 
 
-
 ###
-PUT http://localhost:3009/api/blog/615275af3638622d59873d42
+PUT http://localhost:3009/api/blog
 content-type: application/json
                                                           
 {
@@ -27,3 +28,22 @@ content-type: application/json
     "url": "laj/000",
     "likes": 4
 }
+
+
+###
+POST http://localhost:3009/api/user
+content-type: application/json
+                                                             
+{
+    "username":"lajades",
+    "name":"goodsss", 
+    "password": "loverr",
+    "blogs": ["6166ad4dbc21fd50045234b7"]
+}
+
+###
+GET http://localhost:3009/api/user
+
+
+###
+DELETE http://localhost:3009/api/user/61664f209879b6f9f130a7ee
